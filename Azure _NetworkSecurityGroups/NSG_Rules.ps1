@@ -1,24 +1,24 @@
 ﻿Login-AzureRmAccount
 Get-AzureRmSubscription
-Set-AzureRmContext -SubscriptionId "xxxx"
+Select-AzureRmSubscription -Subscriptionname "xxxx"
 
 # Declare the vairables
 $rgName = "demoRG"
 $source = "*"
 $sourcePort = "*"
 $destinationPort = "80"
-$rulename = "Custom_Allow_Port_80"
+$rulename = "Port_80_External_Allow"
 $nsgName = "demoNSG01"
-$priority = "105"
+$priority = "101"
 $sourceIP = "*"
-$destinationIP = "10.1.0.12"
+$destinationIP = "10.0.10.12"
 
 # Get the NSG resource
 $resource = Get-AzureRmResource | Where {$_.ResourceGroupName –eq $rgName -and $_.ResourceType -eq "Microsoft.Network/networkSecurityGroups"} 
 $nsg = Get-AzureRmNetworkSecurityGroup -Name $nsgName -ResourceGroupName $rgName
 
 # Add the inbound security rule.
-$nsg | Add-AzureRmNetworkSecurityRuleConfig -Name $rulename -Description "Allow Port" -Access Allow `
+$nsg | Add-AzureRmNetworkSecurityRuleConfig -Name $rulename -Description "Custom Rule" -Access Allow `
     -Protocol * -Direction Inbound -Priority $priority -SourceAddressPrefix $source -SourcePortRange $sourcePort `
     -DestinationAddressPrefix $destinationIP -DestinationPortRange $destinationPort
 

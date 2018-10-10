@@ -1,6 +1,6 @@
 ﻿Login-AzureRmAccount
 Get-AzureRmSubscription
-Set-AzureRmContext -SubscriptionId "xxxx"
+Select-AzureRmSubscription -Subscriptionname "xxxx"
 
 # Declare the vairables
 $rgName = "demoRG"
@@ -9,7 +9,7 @@ $nsgName = "demoNSG01"
 $location = "EastUS2"
 $sourcePort = "*"
 $destinationPort = 80,22
-$priority = "106"
+$priority = "105"
 
 # Create the Application Security Group
 $asg1 = New-AzureRmApplicationSecurityGroup -ResourceGroupName $rgName -Name WebServers -Location $location
